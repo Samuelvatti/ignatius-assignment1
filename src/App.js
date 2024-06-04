@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar';
 import Products from './components/Products';
 import Cart from './components/Cart';
 import Account from './components/Account';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 const App = () => {
     const [cart, setCart] = useState([]);
     const [user, setUser] = useState(null);
 
     const addToCart = (product, quantity) => {
+      console.log('addToCart called');
+      console.log('Product:', product);
+      console.log('Quantity:', quantity);
         console.log(`addToCart called with Product: ${product.name}, Quantity: ${quantity}`);
         setCart(prevCart => {
             const existingItem = prevCart.find(item => item.product.id === product.id);
             if (existingItem) {
-                const updatedCart = prevCart.map(item => item.product.id === product.id ? { ...item, quantity: item.quantity + parseInt(quantity) } : item);
+                const updatedCart = prevCart.map(item => 
+                    item.product.id === product.id ? { ...item, quantity: item.quantity + parseInt(quantity) } : item
+                );
                 console.log('Updated cart:', updatedCart);
                 return updatedCart;
             } else {
@@ -52,7 +57,18 @@ const App = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar color="light" light expand="md">
+              <NavbarBrand href="/">Smart Shop</NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                  <NavItem>
+                    <NavLink href="/cart">Cart</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="/account">Account</NavLink>
+                  </NavItem>
+              </Nav>
+            </Navbar>
+            
             <Routes>
                 <Route path="/" element={<Products addToCart={addToCart} />} />
                 <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} finalizePurchase={finalizePurchase} />} />
