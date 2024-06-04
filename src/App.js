@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Products from './components/Products';
@@ -8,7 +8,11 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 const App = () => {
     const [cart, setCart] = useState([]);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState([]);
+    
+    useEffect(() => {
+        console.log('Cart updated:', cart); // Log the cart whenever it changes
+    }, [cart]);
 
     const addToCart = (product, quantity) => {
       console.log('addToCart called');
