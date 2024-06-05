@@ -1,22 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Table } from 'reactstrap';
 
 const Cart = ({ cart, updateQuantity, removeFromCart, finalizePurchase }) => {
-    // Log the cart prop when the component mounts
-    useEffect(() => {
-        console.log('Cart component mounted with cart:', cart);
-    }, [cart]);
-
-    // Log the cart prop whenever it updates
-    useEffect(() => {
-        console.log('Cart prop updated:', cart);
-    }, [cart]);
-
-    // Log the cart length for quick check
-    useEffect(() => {
-        console.log('Cart length:', cart.length);
-    }, [cart]);
-
     return (
         <div>
             <h2>Cart</h2>
