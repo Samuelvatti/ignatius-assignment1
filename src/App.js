@@ -12,9 +12,18 @@ const App = () => {
         return storedCart ? JSON.parse(storedCart) : [];
     });
 
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : {};
+    });
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
+
+    useEffect(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+    }, [user]);
 
     const addToCart = (product, quantity) => {
         setCart(prevCart => {
@@ -45,6 +54,10 @@ const App = () => {
         localStorage.removeItem('cart');
     };
 
+    const updateUser = (newUser) => {
+        setUser(newUser);
+    };
+
     return (
         <div>
             <Navbar color="light" light expand="md">
@@ -62,7 +75,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Products addToCart={addToCart} />} />
                 <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} finalizePurchase={finalizePurchase} />} />
-                <Route path="/account" element={<Account />} />
+                <Route path="/account" element={<Account user={user} updateUser={updateUser} />} />
             </Routes>
         </div>
     );
